@@ -1,0 +1,74 @@
+*********************************************
+Vytvoreni tabulky
+*********************************************
+
+CREATE TABLE IF NOT EXISTS air_pollution (
+  objectid text,
+  name text,
+  globalid text,
+  code text,
+  owner text,
+  so2_1h double,
+  no2_1h double,
+  co_8h double,
+  pm10_1h double,
+  o3_1h double,
+  pm10_24h double,
+  pm2_5_1h double,
+  actualized timestamp,
+  PRIMARY KEY (
+    (name),
+	actualized
+  )
+) WITH comment = 'Air pollution data as measured by stations.';
+
+DESCRIBE air_pollution;
+
+
+*********************************************
+Import dat
+*********************************************
+
+COPY air_pollution (
+  objectid,
+  name,
+  globalid,
+  code,
+  owner,
+  so2_1h,
+  no2_1h,
+  co_8h,
+  pm10_1h,
+  o3_1h,
+  pm10_24h,
+  pm2_5_1h,
+  actualized
+)
+FROM 'modified_data.csv'
+WITH HEADER = true;
+
+*********************************************
+Vypis vsech dat
+*********************************************
+
+select * from air_pollution;
+
+*********************************************
+Vypis vsech dat
+*********************************************
+
+SELECT * FROM air_pollution WHERE name = 'Brno-Zvonařka';
+
+*********************************************
+Vyhledávání data a času nejhoršího znečištění ovzduší v určité části města:
+*********************************************
+// Vytvorime index
+CREATE INDEX ON air_pollution (pm10_1h);
+
+SELECT *
+FROM air_pollution
+WHERE name = 'Brno-Zvonařka'
+ORDER BY pm10_1h DESC
+LIMIT 1;
+
+
