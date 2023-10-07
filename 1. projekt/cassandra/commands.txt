@@ -83,3 +83,14 @@ insert into air_pollution (
 ) values ('Brno-Arboretum', 0, 37.9, 6969, 35.8, 16.2, 28.9, 19.3, '2022-08-25 07:29:35.000000');
 
 select * from air_pollution where name = 'Brno-Arboretum' and actualized = '2022-08-25 07:29:35.000000';
+
+
+***********************************************************************************
+Materializovany pohled
+*********************************************
+
+CREATE MATERIALIZED VIEW temps_no2_pollution AS
+    SELECT * FROM air_pollution
+    WHERE no2_1h IS NOT NULL AND name IS NOT NULL AND actualized IS NOT NULL
+    PRIMARY KEY (no2_1h, name, actualized);
+SELECT * FROM temps_no2_pollution;
