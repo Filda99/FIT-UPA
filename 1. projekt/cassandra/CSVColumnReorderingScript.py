@@ -6,7 +6,7 @@ csv_file_path = 'data.csv'
 modified_file_path = 'modified_data.csv'
 
 # Seznam sloupců, které chcete ponechat a setřídit
-desired_columns = ['objectid','name','globalid','code','owner','so2_1h','no2_1h','co_8h','pm10_1h','o3_1h','pm10_24h','pm2_5_1h','actualized']
+desired_columns = ['name','so2_1h','no2_1h','co_8h','pm10_1h','o3_1h','pm10_24h','pm2_5_1h','actualized']
 
 # Načtení .csv souboru do DataFrame s explicitním nastavením kódování na "UTF-8"
 df = pd.read_csv(csv_file_path, encoding='utf-8')

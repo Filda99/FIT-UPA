@@ -1,13 +1,9 @@
-*********************************************
+***********************************************************************************
 Vytvoreni tabulky
 *********************************************
 
 CREATE TABLE IF NOT EXISTS air_pollution (
-  objectid text,
   name text,
-  globalid text,
-  code text,
-  owner text,
   so2_1h double,
   no2_1h double,
   co_8h double,
@@ -25,16 +21,12 @@ CREATE TABLE IF NOT EXISTS air_pollution (
 DESCRIBE air_pollution;
 
 
-*********************************************
+***********************************************************************************
 Import dat
 *********************************************
 
 COPY air_pollution (
-  objectid,
   name,
-  globalid,
-  code,
-  owner,
   so2_1h,
   no2_1h,
   co_8h,
@@ -47,28 +39,47 @@ COPY air_pollution (
 FROM 'modified_data.csv'
 WITH HEADER = true;
 
-*********************************************
+
+***********************************************************************************
 Vypis vsech dat
 *********************************************
 
 select * from air_pollution;
 
-*********************************************
-Vypis vsech dat
+
+***********************************************************************************
+Vypis vsech dat pro urcity partition key
 *********************************************
 
 SELECT * FROM air_pollution WHERE name = 'Brno-Zvonařka';
 
-*********************************************
+
+***********************************************************************************
 Vyhledávání data a času nejhoršího znečištění ovzduší v určité části města:
+Vytvoreni indexu na 
 *********************************************
 // Vytvorime index
-CREATE INDEX ON air_pollution (pm10_1h);
+CREATE INDEX IF NOT EXISTS worst_pollution_zvonarka ON air_pollution (co_8h);
 
-SELECT *
+SELECT MAX(co_8h)
 FROM air_pollution
-WHERE name = 'Brno-Zvonařka'
-ORDER BY pm10_1h DESC
-LIMIT 1;
+WHERE name = 'Brno-Arboretum';
 
 
+***********************************************************************************
+Import aktualizovane hodnoty co_8h pro jeden zaznam a vypis
+*********************************************
+
+insert into air_pollution (
+  name,
+  so2_1h,
+  no2_1h,
+  co_8h,
+  pm10_1h,
+  o3_1h,
+  pm10_24h,
+  pm2_5_1h,
+  actualized
+) values ('Brno-Arboretum', 0, 37.9, 6969, 35.8, 16.2, 28.9, 19.3, '2022-08-25 07:29:35.000000');
+
+select * from air_pollution where name = 'Brno-Arboretum' and actualized = '2022-08-25 07:29:35.000000';
