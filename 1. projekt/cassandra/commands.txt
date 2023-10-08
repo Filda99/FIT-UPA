@@ -1,4 +1,13 @@
 ***********************************************************************************
+Vytvoreni keyspace
+*********************************************
+
+CREATE KEYSPACE IF NOT EXISTS project WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 3};
+DESCRIBE KEYSPACE project;
+USE project;
+
+
+***********************************************************************************
 Vytvoreni tabulky
 *********************************************
 
