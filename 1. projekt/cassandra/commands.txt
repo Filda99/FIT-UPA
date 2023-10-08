@@ -41,6 +41,34 @@ WITH HEADER = true;
 
 
 ***********************************************************************************
+Import aktualizovanych dat
+*********************************************
+
+select * from air_pollution where name = 'Brno-Zvonařka' and actualized = '2022-08-25 07:29:35.000000';
+select * from air_pollution where name = 'Brno-Lány' and actualized = '2022-08-25 07:29:35.000000';
+select * from air_pollution where name = 'Brno-Lány' and actualized = '2022-08-25 07:29:36.000000';
+
+COPY air_pollution (
+  name,
+  so2_1h,
+  no2_1h,
+  co_8h,
+  pm10_1h,
+  o3_1h,
+  pm10_24h,
+  pm2_5_1h,
+  actualized
+)
+FROM 'modified_data2.csv'
+WITH HEADER = true;
+
+
+select * from air_pollution where name = 'Brno-Zvonařka' and actualized = '2022-08-25 07:29:35.000000';
+select * from air_pollution where name = 'Brno-Lány' and actualized = '2022-08-25 07:29:35.000000';
+select * from air_pollution where name = 'Brno-Lány' and actualized = '2022-08-25 07:29:36.000000';
+
+
+***********************************************************************************
 Vypis vsech dat
 *********************************************
 
@@ -56,10 +84,10 @@ SELECT * FROM air_pollution WHERE name = 'Brno-Zvonařka';
 
 ***********************************************************************************
 Vyhledávání data a času nejhoršího znečištění ovzduší v určité části města:
-Vytvoreni indexu na 
+Vytvoreni indexu
 *********************************************
 // Vytvorime index
-CREATE INDEX IF NOT EXISTS worst_pollution_zvonarka ON air_pollution (co_8h);
+CREATE INDEX IF NOT EXISTS worst_pollution_arboretum ON air_pollution (co_8h);
 
 SELECT MAX(co_8h)
 FROM air_pollution
@@ -69,6 +97,8 @@ WHERE name = 'Brno-Arboretum';
 ***********************************************************************************
 Import aktualizovane hodnoty co_8h pro jeden zaznam a vypis
 *********************************************
+
+select * from air_pollution where name = 'Brno-Arboretum' and actualized = '2022-08-25 07:29:35.000000';
 
 insert into air_pollution (
   name,
