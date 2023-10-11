@@ -1,0 +1,14 @@
+[
+    {
+        "_id": "Brno-Tuřany",
+        "accident_ids": [
+            "{dde73846-18ca-4aaa-b665-6e056563b7e6}"
+        ]
+    },
+    {
+        "_id": "Brno-střed",
+        "accident_ids": [
+            "{12345134-d2a0-41d5-bdfc-1921e7be5735}"
+        ]
+    }
+]

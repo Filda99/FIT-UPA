@@ -3,7 +3,7 @@ import os
 
 # Nastavte cestu k vašemu .csv souboru
 csv_file_path = 'data.csv'
-modified_file_path = 'modified_data.csv'
+modified_file_path = 'air_pollution_data.csv'
 
 # Seznam sloupců, které chcete ponechat a setřídit
 desired_columns = ['name','so2_1h','no2_1h','co_8h','pm10_1h','o3_1h','pm10_24h','pm2_5_1h','actualized']
