@@ -10,6 +10,14 @@ HEADERS = {
     'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
 }
 
+# set num_of_urls from the command line argument
+if len(sys.argv) > 1:
+    try:
+        num_of_urls = int(sys.argv[1])
+    except ValueError:
+        print("Invalid argument for num_of_urls. Using default value 100.")
+        num_of_urls = 100
+
 main_url = 'https://www.one.de'
 categories_urls = []
 urls_to_process = []
@@ -17,6 +25,8 @@ items_urls = []
 
 page = requests.get(main_url, headers=HEADERS)
 soup = bs(page.content, 'html.parser')
+
+####################################################################################
 
 # 1) find categories on the main page
 def get_category_urls(main_url):
@@ -78,29 +88,17 @@ def extract_product_urls(page_url):
 
 ####################################################################################
 
-def main():
-    # Set num_of_urls from the command line argument
-    if len(sys.argv) > 1:
-        try:
-            num_of_urls = int(sys.argv[1])
-        except ValueError:
-            num_of_urls = 100
-            print("Invalid argument for num_of_urls. Using default value 100.")
+# get all categories
+get_category_urls(main_url)
+# choose category
+url_to_analyze = categories_urls[1] # https://www.one.de/pc-systeme/one-gaming-pcs/
 
-    # get all categories
-    get_category_urls(main_url)
-    # choose category
-    url_to_analyze = categories_urls[1]
+# get products urls
+get_urls(url_to_analyze, num_of_urls)
 
-    # get products urls
-    get_urls(url_to_analyze, num_of_urls)
+# now the urls are saved in items_urls
+items_urls = items_urls[:num_of_urls] # only save the needed amount of urls
 
-    # now the urls are saved in items_urls
-    items_urls = items_urls[:num_of_urls] # only save the needed amount of urls
-
-    for url in items_urls:
-        print(url)
-    
-
-if __name__ == "__main__":
-    main()
+# print output
+for url in items_urls:
+    print(url)
