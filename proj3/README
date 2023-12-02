@@ -21,6 +21,6 @@ Poznámky:
     1) Nejdříve spustit build.sh (instalace potřebných knihoven).
     2) Spustit run.sh
         2.1) Spustí skript get_urls.py (výchozí hodnota počtu URL ke zpracování je 100).
-        2.2) Výstup přesměrován do souboru urls.txt.
-        2.3) Spuštění parse_urls.py, který bere na vstup soubor urls.txt a hodnotu určující počet URL ke zpracování (výchozí hodnota 1).
-        2.4) Výstup přesměrován do souboru data.tsv.
+        2.2) Výstup přesměrován do souboru urls_test.txt.
+        2.3) Spuštění parse_urls.py, který bere na vstup soubor urls_test.txt a hodnotu určující počet URL ke zpracování (výchozí hodnota 1, ve skriptu zadána na 10 dle zadání).
+        2.4) Výstup vypsán na stdout.
