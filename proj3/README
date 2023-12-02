@@ -1,0 +1,26 @@
+Název týmu a seznam řešitelů:
+    Tým sUPerlAtivů:
+        Filip Jahn      (xjahnf00)
+        Michal Luner    (xluner01)
+        Vojtěch Staněk  (xstane45)
+
+URL a název e-shopu:
+    https://www.one.de 
+    One.de
+
+Význam sloupců ve výstupu TSV:
+    link - unikátní identifikátor zařízení (URL)
+    name - jméno zařízení
+    price - cena zařízení
+    processor_name - název CPU
+    storage - úložiště zařízení
+    RAM - název i velikost RAM paměti
+    GPU - název GPU
+
+Poznámky:
+    1) Nejdříve spustit build.sh (instalace potřebných knihoven).
+    2) Spustit run.sh
+        2.1) Spustí skript get_urls.py (výchozí hodnota počtu URL ke zpracování je 100).
+        2.2) Výstup přesměrován do souboru urls.txt.
+        2.3) Spuštění parse_urls.py, který bere na vstup soubor urls.txt a hodnotu určující počet URL ke zpracování (výchozí hodnota 1).
+        2.4) Výstup přesměrován do souboru data.tsv.
