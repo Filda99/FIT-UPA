@@ -20,8 +20,8 @@ num_of_urls = 100
 page = requests.get(main_url, headers=HEADERS)
 soup = bs(page.content, 'html.parser')
 
-with open('C:\\Users\\M\\Desktop\\category_urls.txt', 'w', encoding="utf-8") as file:
-    file.write(str(page.content))
+# with open('C:\\Users\\M\\Desktop\\category_urls.txt', 'w', encoding="utf-8") as file:
+#     file.write(str(page.content))
 
 # 1) find categories on the main page
 def get_category_urls(main_url):
@@ -62,7 +62,6 @@ def get_urls(url_to_analyze, num_of_urls):
                 if num_of_obtained_products < num_of_urls:
                     num_of_obtained_products += extract_product_urls(page_url)
                     t.update(num_of_obtained_products)
-                    # print(f"Processed {num_of_obtained_products}/{num_of_urls} URLs")
                 else:
                     t.close()
                     break
@@ -94,7 +93,7 @@ get_urls(url_to_analyze, num_of_urls)
 # now the urls are saved in items_urls
 items_urls = items_urls[:num_of_urls] # only save the needed amount of urls
 
-for idx, url in enumerate(items_urls):
+for url in items_urls:
     print(url)
 
 ##################

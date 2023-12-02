@@ -89,7 +89,7 @@ def get_name_and_price_from_link(link):
             gpu_value = "Unknown"
         
     else:
-        # product not avaliable 
+        # product not available 
         name = 'Unknown'
         price = "0"
         processor_value = "Unknown"
@@ -114,7 +114,7 @@ def get_name_and_price_from_link(link):
     
 def get_names_and_prices_from_link_list(links):
     # delay in seconds
-    delay = 5
+    delay = 1
     
     data = []
     for l in tqdm(links):
