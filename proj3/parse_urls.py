@@ -75,9 +75,6 @@ def get_name_and_price_from_link(link):
     
     
 def get_names_and_prices_from_link_list(links):
-    # delay in seconds
-    delay = 1
-    
     data = []
     t = tqdm(links)
     t.set_description("Number of pages proceed: ")
@@ -86,7 +83,7 @@ def get_names_and_prices_from_link_list(links):
         get_name_and_price_from_link(link)
         
         # there is a request limit preventing DDOS attacks on the page so we have to wait some time
-        sleep(delay)   
+        sleep(1)   
     
     return data
 
@@ -107,13 +104,13 @@ def get_links(file_name, count):
 
 def main():
     # parsing arguments which must be in format
-    # python3 parse_urls.py <count_to_parse> <file_with_urls> <file_to_store>
+    # python3 parse_urls.py <count_to_parse> <file_with_urls>
     # examples:
     #   python3 parse_urls.py
     #   python3 parse_urls.py 20
     #   python3 parse_urls.py 20 urls.txt
     
-    count_to_parse = None
+    count_to_parse = 1
     file_with_urls = 'urls.txt'
     
     if len(sys.argv) > 1:
@@ -125,5 +122,5 @@ def main():
     get_names_and_prices_from_link_list(links)
     
 
-# if __name__ == "__main__":
-main()
+if __name__ == "__main__":
+    main()
