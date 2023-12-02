@@ -32,33 +32,62 @@ def get_name_and_price_from_link(link):
     processor_value = ""
     internal_storage_value = ""
     ram_value = ""
-    battery_value = ""
+    gpu_value = ""
     
     page = requests.get(link, headers=HEADERS)
     soup = bs(page.content, 'html.parser')
-    main_content = soup.find('div', class_='product_section js-product_section container is-justify-center')
+    main_content = soup.find('div', class_='product--detail-upper block-group')
     
     # content found
     if main_content is not None:
-        name = main_content.find('h1', class_='product_name title small-down--hidden').text.strip()
-        price = main_content.find('div', class_='price-ui').text.strip()
+        name = main_content.find('h1', class_='product--title').text.strip()
+        price = main_content.find('div', class_='product--price').text.strip()
         
-        # Extract Processor
-        # .parent.parent is used to get to the row of a table
-        processor_row = soup.find('span', class_='spec_header_first', string='Processor').parent.parent
-        processor_value = processor_row.find('span', class_='spec_content_first').text.strip()
+        # # Extract Processor
+        # # .parent.parent is used to get to the row of a table
+        # processor_row = soup.find('div', class_='one-list-item__subtitle', string='Processor').parent
+        # processor_value = processor_row.find('span', class_='spec_content_first').text.strip()
 
-        # Extract Internal Storage
-        internal_storage_row = soup.find('span', class_='spec_header_first', string='Internal Storage').parent.parent
-        internal_storage_value = internal_storage_row.find('span', class_='spec_content_first').text.strip()
+        # # Extract Internal Storage
+        # internal_storage_row = soup.find('span', class_='spec_header_first', string='Internal Storage').parent
+        # internal_storage_value = internal_storage_row.find('span', class_='spec_content_first').text.strip()
 
-        # Extract RAM
-        ram_row = soup.find('span', class_='spec_header_second', string='RAM').parent.parent
-        ram_value = ram_row.find('span', class_='spec_content_second').text.strip()
+        # # Extract RAM
+        # ram_row = soup.find('span', class_='spec_header_second', string='RAM').parent
+        # ram_value = ram_row.find('span', class_='spec_content_second').text.strip()
 
-        # Extract Battery
-        battery_row = soup.find('span', class_='spec_header_first', string='Battery').parent.parent
-        battery_value = battery_row.find('span', class_='spec_content_first').text.strip()
+        # # Extract Battery
+        # battery_row = soup.find('span', class_='spec_header_first', string='Battery').parent
+        # battery_value = battery_row.find('span', class_='spec_content_first').text.strip()
+        proc_done = ram_done = stor_done = gpu_done = False
+        
+        for item in soup.find_all('div', class_='one-list-item'):
+            subtitle = item.find('div', class_='one-list-item__subtitle').text.strip()
+            title = item.find('div', class_='one-list-item__title').text.strip()
+
+            # Check for specific subtitles and store corresponding values
+            if "Prozessor" in subtitle:
+                processor_value = title
+                proc_done = True
+            elif "Arbeitsspeicher" in subtitle:
+                ram_value = title
+                ram_done = True
+            elif "SSD" in subtitle:
+                internal_storage_value = title
+                stor_done = True
+            elif "Grafikkarte" in subtitle:
+                gpu_value = title
+                gpu_done = True
+
+        if not proc_done:
+            processor_value = "Unknown"
+        if not ram_done:
+            ram_value = "0"
+        if not stor_done:
+            internal_storage_value = "0"
+        if not gpu_done:
+            gpu_value = "Unknown"
+        
     else:
         # product not avaliable 
         name = 'Unknown'
@@ -66,21 +95,21 @@ def get_name_and_price_from_link(link):
         processor_value = "Unknown"
         internal_storage_value = "0"
         ram_value = "0"
-        battery_value = "0"
+        gpu_value = "Unknown"
             
     name = remove_accents(name)
     price = remove_accents(price)
     processor_value = remove_accents(processor_value)
     internal_storage_value = remove_accents(internal_storage_value)
     ram_value = remove_accents(ram_value)
-    battery_value = remove_accents(battery_value)
+    gpu_value = remove_accents(gpu_value)
             
     if debug:
         print(name, price, processor_value, internal_storage_value, 
-              ram_value, battery_value, '   (', link, ')')
+              ram_value, gpu_value, '   (', link, ')')
         
     return(name, price, processor_value, internal_storage_value, 
-              ram_value, battery_value)
+              ram_value, gpu_value)
     
     
 def get_names_and_prices_from_link_list(links):
@@ -90,8 +119,8 @@ def get_names_and_prices_from_link_list(links):
     data = []
     for l in tqdm(links):
         link = l.strip()
-        name, price, processor_value, internal_storage_value, ram_value, battery_value = get_name_and_price_from_link(link)
-        data.append((link, name, price, processor_value, internal_storage_value, ram_value, battery_value))
+        name, price, processor_value, internal_storage_value, ram_value, gpu_value = get_name_and_price_from_link(link)
+        data.append((link, name, price, processor_value, internal_storage_value, ram_value, gpu_value))
         
         # there is a request limit preventing DDOS attacks on the page so we have to wait some time
         sleep(delay)   
