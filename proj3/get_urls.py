@@ -15,13 +15,9 @@ main_url = 'https://www.one.de'
 categories_urls = []
 urls_to_process = []
 items_urls = []
-num_of_urls = 100
 
 page = requests.get(main_url, headers=HEADERS)
 soup = bs(page.content, 'html.parser')
-
-# with open('C:\\Users\\M\\Desktop\\category_urls.txt', 'w', encoding="utf-8") as file:
-#     file.write(str(page.content))
 
 # 1) find categories on the main page
 def get_category_urls(main_url):
@@ -71,7 +67,7 @@ def extract_product_urls(page_url):
     soup = bs(page.content, 'html.parser')
     num_of_items_on_page = 0
 
-    sleep(2)   
+    sleep(1)   
 
     # Extract href attribute from each product item
     product_links = soup.find_all('a', class_='product__link')
@@ -82,25 +78,30 @@ def extract_product_urls(page_url):
     return num_of_items_on_page
 
 ############################
-# get all categories
-get_category_urls(main_url)
-# choose category
-url_to_analyze = categories_urls[1]
 
-# get products urls
-get_urls(url_to_analyze, num_of_urls)
+def main():
+    # Set num_of_urls from the command line argument
+    if len(sys.argv) > 1:
+        try:
+            num_of_urls = int(sys.argv[1])
+        except ValueError:
+            num_of_urls = 100
+            print("Invalid argument for num_of_urls. Using default value 100.")
 
-# now the urls are saved in items_urls
-items_urls = items_urls[:num_of_urls] # only save the needed amount of urls
+    # get all categories
+    get_category_urls(main_url)
+    # choose category
+    url_to_analyze = categories_urls[1]
 
-for url in items_urls:
-    print(url)
+    # get products urls
+    get_urls(url_to_analyze, num_of_urls)
 
-##################
+    # now the urls are saved in items_urls
+    items_urls = items_urls[:num_of_urls] # only save the needed amount of urls
 
-# Set num_of_urls from the command line argument
-if len(sys.argv) > 1:
-    try:
-        num_of_urls = int(sys.argv[1])
-    except ValueError:
-        print("Invalid argument for num_of_urls. Using default value 100.")
+    for url in items_urls:
+        print(url)
+    
+
+if __name__ == "__main__":
+    main()
