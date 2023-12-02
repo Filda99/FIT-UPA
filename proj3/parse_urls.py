@@ -76,7 +76,7 @@ def get_name_and_price_from_link(link):
 def get_names_and_prices_from_link_list(links):
     data = []
     t = tqdm(links)
-    t.set_description("Number of pages proceed: ")
+    t.set_description("Number of pages processed: ")
     for l in t:
         link = l.strip()
         get_name_and_price_from_link(link)
