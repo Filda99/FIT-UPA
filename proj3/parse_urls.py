@@ -13,10 +13,10 @@ HEADERS = {
 def get_name_and_price_from_link(link):
     name = ""
     price = ""
-    processor_value = ""
-    internal_storage_value = ""
-    ram_value = ""
-    gpu_value = ""
+    processor_name = ""
+    storage = ""
+    ram = ""
+    gpu = ""
     
     page = requests.get(link, headers=HEADERS)
     soup = bs(page.content, 'html.parser')
@@ -50,28 +50,28 @@ def get_name_and_price_from_link(link):
 
         # Check for specific subtitles and store corresponding values
         if "Prozessor" in subtitle:
-            processor_value = title
+            processor_name = title
             proc_done = True
         elif "Arbeitsspeicher" in subtitle:
-            ram_value = title
+            ram = title
             ram_done = True
         elif "SSD" in subtitle:
-            internal_storage_value = title
+            storage = title
             stor_done = True
         elif "Grafikkarte" in subtitle:
-            gpu_value = title
+            gpu = title
             gpu_done = True
 
     if not proc_done:
-        processor_value = "Unknown"
+        processor_name = "Unknown"
     if not ram_done:
-        ram_value = "0"
+        ram = "0"
     if not stor_done:
-        internal_storage_value = "0"
+        storage = "0"
     if not gpu_done:
-        gpu_value = "Unknown"
+        gpu = "Unknown"
         
-    print (link, name, price, processor_value, internal_storage_value, ram_value, gpu_value)
+    print (link, name, price, processor_name, storage, ram, gpu)
     
     
 def get_names_and_prices_from_link_list(links):
