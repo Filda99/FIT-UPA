@@ -1,6 +1,5 @@
 import sys
 import requests
-import unicodedata
 from tqdm import tqdm
 from time import sleep
 from bs4 import BeautifulSoup as bs
