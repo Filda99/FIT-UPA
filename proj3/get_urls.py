@@ -5,7 +5,6 @@ from tqdm import tqdm
 from time import sleep
 from bs4 import BeautifulSoup as bs
 
-
 # https://scrapeops.io/web-scraping-playbook/403-forbidden-error-web-scraping/
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
@@ -77,7 +76,7 @@ def extract_product_urls(page_url):
     
     return num_of_items_on_page
 
-############################
+####################################################################################
 
 def main():
     # Set num_of_urls from the command line argument

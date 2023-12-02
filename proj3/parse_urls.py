@@ -73,7 +73,6 @@ def get_name_and_price_from_link(link):
         
     print (link, name, price, processor_name, storage, ram, gpu)
     
-    
 def get_names_and_prices_from_link_list(links):
     data = []
     t = tqdm(links)
@@ -87,7 +86,6 @@ def get_names_and_prices_from_link_list(links):
     
     return data
 
-
 def get_links(file_name, count):
     lines = []
     with open(file_name, "r") as f:
@@ -100,7 +98,8 @@ def get_links(file_name, count):
             lines = lines[:count]
 
     return lines
-    
+
+####################################################################################
 
 def main():
     # parsing arguments which must be in format
@@ -121,6 +120,5 @@ def main():
     links = get_links(file_with_urls, count_to_parse)
     get_names_and_prices_from_link_list(links)
     
-
 if __name__ == "__main__":
     main()
