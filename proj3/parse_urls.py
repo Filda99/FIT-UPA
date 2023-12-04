@@ -37,8 +37,10 @@ def get_name_and_price_from_link(link):
     # Extract the text inside the span
     price_text = price_span.text.strip()
     # Extract only the numeric part of the price
-    numeric_price = re.sub(r'\D', '', price_text.split(',')[0])
-    numeric_price = int(numeric_price)
+    try:
+        price = re.match(r'[\d\.\,]+\s€', price_text).group(0)
+    except:
+        price = "Unknown price"
 
     # ---------------------
     # Get specs
@@ -71,7 +73,7 @@ def get_name_and_price_from_link(link):
     if not gpu_done:
         gpu = "Unknown"
         
-    print (link, name, price, processor_name, storage, ram, gpu)
+    print(link, name, price, processor_name, storage, ram, gpu, sep="\t")
     
 def get_names_and_prices_from_link_list(links):
     data = []

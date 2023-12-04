@@ -18,7 +18,7 @@ Význam sloupců ve výstupu TSV:
     GPU - název GPU
 
 Poznámky:
-    1) Nejdříve spustit build.sh (instalace potřebných knihoven).
+    1) Nejdříve spustit build.sh (vytvoření virtuálního prostředí a instalace potřebných knihoven).
     2) Spustit run.sh
         2.1) Spustí skript get_urls.py (výchozí hodnota počtu URL ke zpracování je 100).
         2.2) Výstup přesměrován do souboru urls_test.txt.

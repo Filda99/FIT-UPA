@@ -1,7 +1,6 @@
 #! /bin/bash
 
-pip3 install BeautifulSoup4
-pip3 install requests
-pip3 install urllib3==1.26.6
-pip3 install re
-pip3 install tqdm
+python3 -m venv superlativ_upa_proj3
+source superlativ_upa_proj3/bin/activate
+
+python3 -m pip install -r requirements.txt
